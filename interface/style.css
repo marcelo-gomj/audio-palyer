@@ -1,0 +1,149 @@
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
+ul, li{
+   list-style: none;
+}
+
+::-webkit-scrollbar{
+   /* background: rgb(20, 20, 20); */
+   width: 8px;
+}
+
+::-webkit-scrollbar-track{
+   background: rgb(20, 20, 20);
+}
+
+::-webkit-scrollbar-thumb {
+   background-color: rgb(50, 50, 50);
+   border-radius: 10px;
+}
+
+html{
+   background: rgb(29, 29, 29);
+}
+
+.window-container {
+   color: white;
+}
+
+main{
+   display: flex;
+   position: relative;
+   width: 100%;
+   height: 90%;
+}
+
+aside{
+   position: relative;
+   background: rgb(20, 20, 20);
+   width: 36%;
+   height: 100%;
+   border: 2px solid rgb(25, 25, 25);
+   overflow-y: auto;
+}
+
+.aside-container {
+   display: flex;
+   flex-direction: column;
+   gap: 0.5rem;
+   padding: 1rem 0;
+   height: 100%;
+}
+
+.aside-container > div{
+   margin: 0 .2rem;
+}
+
+.aside-container > div:last-child{
+   margin-bottom: 2rem;
+}
+
+.category-item {
+   display: flex;
+   position: relative;
+   align-items: center;
+   gap: 2rem;
+   padding: .6rem;
+   padding-left: 1rem;
+   font-weight: 500;
+   border-radius: 10px;
+   cursor: pointer;
+}
+
+.category-item > svg{
+   width: 1.5rem !important;
+   height: 1.5rem !important;
+}
+ 
+.category-item:hover {
+   background: rgb(30, 30, 30);
+}
+
+.category-item > img{
+   position: absolute;
+   right: 1rem;
+}
+
+.opened-category{
+   transform: rotate(90deg);
+}
+
+.sub-category{
+   display: none;
+   margin: .2rem 0;
+}
+
+.open-sub-category{
+   display: block;
+}
+
+.sub-category li{
+   padding: .3rem 0;
+   padding-left: 3rem;
+   color: rgb(200, 200, 200);
+   cursor: pointer;
+   font-weight: 400;
+}
+
+.sub-category li:hover{
+   color: white;
+}
+
+.content{
+   width: 100%;
+   padding: 1rem 1.2rem;
+   font-size: .95rem;
+   font-weight: 500;
+
+   overflow: scroll;
+}
+
+.content li{
+   display: flex;
+   width: 100%;
+   padding: .4rem .8rem;
+   justify-content: space-between;
+}
+
+.content li div:first-child span{
+   margin: 0 2rem;
+} 
+
+.content li:hover{
+   background: rgb(15, 15, 15);
+}
+.content img{
+   width: 100px;
+   height: 100px;
+}
+
+footer{
+   background: rgb(20, 20, 20);
+   height: 10%;
+   width: 100%;
+}
