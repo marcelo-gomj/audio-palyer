@@ -1,5 +1,7 @@
-const { app, BrowserWindow, globalShortcut, ipcMain } = require("electron");
-// const { loadAlbums } = require("./loadAlbums");
+const { app, BrowserWindow, globalShortcut, ipcMain, dialog } = require("electron");
+const fs = require('fs')
+
+
 
 const createWindow = () => {
    const win = new BrowserWindow({
@@ -30,11 +32,23 @@ const createWindow = () => {
 
    win.loadFile("./interface/index.html");
 
+      // Monitora alterações em arquivos HTML e recarrega a janela principal
+   fs.watch('./interface/index.html', () => {
+      win.reload()
+   })
+   
+   // Monitora alterações em arquivos CSS e recarrega a janela principal
+   fs.watch('./interface/style.css', () => {
+      win.reload()
+   })
+
    app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) {
          createWindow();
       }
    });
+
+
 
    // ipcMain.on("load-albums", async (event) =>{
    //    const data = await loadAlbums();
@@ -52,3 +66,7 @@ app.whenReady().then(() => {
    createWindow()
 })
 
+ipcMain.handle('open-dialog', async (event, options) => {
+   const result = await dialog.showOpenDialog(options)
+   return result.filePaths
+ })
