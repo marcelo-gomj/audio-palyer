@@ -1,7 +1,5 @@
 const { app, BrowserWindow, globalShortcut, ipcMain, dialog } = require("electron");
-const fs = require('fs')
-
-
+const { watch } = require('fs')
 
 const createWindow = () => {
    const win = new BrowserWindow({
@@ -11,7 +9,7 @@ const createWindow = () => {
       minHeight: 500,
       webPreferences: {
          nodeIntegration: true,
-         contextIsolation: false, // desabilita o isolamento de contexto
+         contextIsolation: false,
       }
    });
 
@@ -30,15 +28,9 @@ const createWindow = () => {
       }
    })
 
-   win.loadFile("./interface/index.html");
+   win.loadURL("http://localhost:3000");
 
-      // Monitora alterações em arquivos HTML e recarrega a janela principal
-   fs.watch('./interface/index.html', () => {
-      win.reload()
-   })
-   
-   // Monitora alterações em arquivos CSS e recarrega a janela principal
-   fs.watch('./interface/style.css', () => {
+   watch('./dist/index.html', () => {
       win.reload()
    })
 
@@ -47,13 +39,6 @@ const createWindow = () => {
          createWindow();
       }
    });
-
-
-
-   // ipcMain.on("load-albums", async (event) =>{
-   //    const data = await loadAlbums();
-   //    event.reply("message", { data })
-   // })
 }
 
 app.on('window-all-closed', () => {
@@ -69,4 +54,8 @@ app.whenReady().then(() => {
 ipcMain.handle('open-dialog', async (event, options) => {
    const result = await dialog.showOpenDialog(options)
    return result.filePaths
- })
+})
+
+ipcMain.handle('get-user-data-path', (event) => {
+   return app.getPath('userData');
+});
