@@ -1,27 +1,10 @@
-import { useContext } from "react"
-import { ModalContext } from "../Contexts/ModalContext"
+import { SelectFolderButton } from "../Modal/SelectFolders";
 
 export function ContentMain({ category }) {
-   const { openModal } = useContext(ModalContext);
-
-   function handleModalSelectFolder() {
-      openModal(
-         "Selecione a pasta",
-         "Hello WORLD"
-      )   
-   }
-
    function generateContent(category) {
       if(category === "albums"){
-
-
          return (
-            <div className="nothing-source-library">
-               <div 
-                  className="button-select-sources"
-                  onClick={handleModalSelectFolder}
-               >Selecione pastas de músicas</div>
-            </div>
+            <SelectFolderButton />
          )
       }
    }

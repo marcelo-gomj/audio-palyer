@@ -1,0 +1,89 @@
+.aside-container {
+   display: flex;
+   flex-direction: column;
+   position: relative;
+   background: rgb(5, 5, 5);
+
+   width: 26rem;
+   height: 100%;
+   gap: 0.5rem;
+   padding: 1rem 0;
+   
+   overflow-y: auto;
+   z-index: 900;
+}
+
+.aside-container > div{
+   margin: 0 .2rem;
+}
+
+.aside-container > div:last-child{
+   margin-bottom: 2rem;
+}
+
+.category-item {
+   display: flex;
+   position: relative;
+   align-items: center;
+   gap: 2rem;
+   font-size: 1rem;
+   padding: .6rem;
+   padding-left: 1rem;
+   color: rgb(220, 220, 220);
+   font-weight: 500;
+   border-radius: 20px;
+
+   border: 2px solid transparent;
+
+   transition: background-color .3s linear;
+
+   cursor: pointer;
+}
+
+.category-item > svg{
+   width: 1.5rem !important;
+   height: 1.5rem !important;
+   opacity: 0.9;
+
+}
+
+.category-item:hover svg:first-child{
+   opacity: 1;
+}
+.category-item:hover {
+   color: white;
+}
+
+.category-item svg:last-child{
+   position: absolute;
+   width: 1.3rem;
+   right: 1rem;
+}
+
+.opened-category{
+   transform: rotate(90deg);
+}
+
+.sub-category{
+   display: none;
+   margin: .2rem 0;
+}
+
+.open-sub-category{
+   display: block;
+}
+
+.sub-category li{
+   padding: .3rem 0;
+   padding-left: 3rem;
+   font-size: 0.95rem;
+   color: rgb(200, 200, 200);
+   border: 2px solid transparent;
+   cursor: pointer;
+   font-weight: 400;
+
+}
+
+.sub-category li:hover{
+   color: white;
+}
