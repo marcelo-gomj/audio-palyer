@@ -1,12 +1,12 @@
 .list-folders-content{
-   margin: 1rem 0;
+   padding: 1.4rem 0 1rem;
 }
 
 .list-folders {
    display: flex;
    position: relative;
    flex-direction: column;
-   gap: .6rem;
+   gap: .8rem;
    padding: 0 .5rem;
    height: 18rem;
    overflow-y: scroll;
@@ -17,22 +17,25 @@
    align-items: center;
    position: relative;
    padding: .5rem 2rem .5rem 1rem;
-   font-size: 1rem;
-   color: rgba(255, 255, 255, 0.8);
+   font-size: 0.96rem;
+   color: rgba(255, 255, 255, 0.6);
    word-break: break-all;
-   /* font-weight: 500; */
-   border-radius: 20px;
    cursor: pointer;
-   transition: background-color .1s linear;
+   transition: color .2s linear;
 }
 
 .list-folders li:hover{
    color: white;
 }
 
+.list-folders li:active{
+   font-weight: 400;
+}
+
+
 .list-folders li svg:first-child{
    margin-right: 1rem;
-   stroke: rgba(255, 255, 255, 0.8);
+   stroke: rgba(255, 255, 255, 0.6);
    width: 1.2rem;
 }
 
@@ -83,8 +86,9 @@
 }
 
 .controllers-select-folders div:hover{
-   background-color: rgba(20, 20, 20);
-   border: 2px solid rgb(20, 20, 20);
+   background-color: rgba(15, 15, 15);
+   border: 2px solid rgb(30, 30, 30);
+   box-shadow: 1px 1px 20px black;
 }
 
 .controllers-select-folders div:active{

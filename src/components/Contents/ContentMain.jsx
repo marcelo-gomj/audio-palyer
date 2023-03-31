@@ -1,12 +1,31 @@
-import { SelectFolderButton } from "../Modal/SelectFolders";
+import { useState, useEffect, useCallback } from "react";
+import { createDatabase, read, count, albums } from "../../services/database.js";
+
+import { ListGroups } from "./listGroups.jsx";
 
 export function ContentMain({ category }) {
-   function generateContent(category) {
-      if(category === "albums"){
+   const [list, setList] = useState([]);
+
+   useEffect(() => {
+      (async () => {
+         if (category === "albums") {
+            const database = await createDatabase("albums");
+            const data = await database(albums);
+            setList(data);
+         }
+
+      })()
+
+   }, [category]);
+
+   const generateContent = (category) => {
+      if (category === "albums") {
          return (
-            <SelectFolderButton />
+            <ListGroups list={list} /> 
          )
       }
+
+      return [];
    }
 
    return (

@@ -34,47 +34,16 @@ main{
    height: 90%;
 }
 
-
 .content{
    position: relative;
    width: 100%;
-   padding: 1rem 1.2rem;
-   font-size: .95rem;
+   font-size: 1rem;
    font-weight: 500;
-
-   overflow-y: scroll;
+   border-left: 2px solid rgb(12, 12, 12);
+   overflow: hidden;
 }
 
-.content::after{
-   content: "";
-   position: absolute;
-   width: 1px;
-   left: 0;
-   top: 0;
-   background: rgb(24, 24, 24);
-   height: 100%;
 
-}
-
-.content li{
-   display: flex;
-   width: 100%;
-   padding: .4rem .8rem;
-   justify-content: space-between;
-}
-
-.content li div:first-child span{
-   margin: 0 2rem;
-} 
-
-.content li:hover{
-   background: rgb(15, 15, 15);
-}
-
-.content img{
-   width: 100px;
-   height: 100px;
-}
 
 /* .select-folders-container{
    display: flex;

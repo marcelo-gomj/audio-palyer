@@ -8,26 +8,29 @@ import Playlist from "../assets/playlist.svg";
 import Queue from "../assets/queue.svg";
 import ListIcon from "../assets/list.svg";
 
-export function AsideLayout() {
+export function AsideLayout({ handleCategory }) {
    const [starList, setStarList] = useState(false);
    const [playlist, setPlaylist] = useState(false);
 
    function handleOpenCategory(subcategory) {
       if(subcategory === "playlist") {
          setPlaylist((state) => !state)
+         handleCategory("playlist");
       }
 
       if(subcategory === "starlist"){
          setStarList((state) => !state)
+         handleCategory("starlist");
+
       }
    }
 
    function handleQueue() {
-
+      handleCategory("queue");
    }
 
    function handleClickAlbums() {
-
+      handleCategory("albums")
    }
 
    return (
@@ -35,6 +38,7 @@ export function AsideLayout() {
          <div
             className={sidebar["category-item"]}
             id="albums-category"
+            onClick={handleClickAlbums}
          >
             <Disc />
             <span>Albúns</span>
@@ -78,7 +82,9 @@ export function AsideLayout() {
             </ul>
          </div>
 
-         <div className={sidebar["category-item"]}>
+         <div className={sidebar["category-item"]}
+            onClick={handleQueue}
+         >
             <Queue />
             <span>Fila</span>
          </div>
