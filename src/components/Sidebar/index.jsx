@@ -7,87 +7,54 @@ import Disc from "../assets/disc.svg";
 import Playlist from "../assets/playlist.svg";
 import Queue from "../assets/queue.svg";
 import ListIcon from "../assets/list.svg";
+import Search from "../assets/search.svg";
+import Config from "../assets/config.svg";
+import Artist from "../assets/artist.svg";
+import Folder from "../assets/folder-icon.svg";
+import Tag from "../assets/tag.svg"
+
+import { CategoryItem } from "./CategoryItem";
 
 export function AsideLayout({ handleCategory }) {
-   const [starList, setStarList] = useState(false);
-   const [playlist, setPlaylist] = useState(false);
-
-   function handleOpenCategory(subcategory) {
-      if(subcategory === "playlist") {
-         setPlaylist((state) => !state)
-         handleCategory("playlist");
-      }
-
-      if(subcategory === "starlist"){
-         setStarList((state) => !state)
-         handleCategory("starlist");
-
-      }
-   }
-
-   function handleQueue() {
-      handleCategory("queue");
-   }
-
-   function handleClickAlbums() {
-      handleCategory("albums")
-   }
 
    return (
       <aside className={sidebar["aside-container"]}>
-         <div
-            className={sidebar["category-item"]}
-            id="albums-category"
-            onClick={handleClickAlbums}
-         >
+         <CategoryItem  path={"albums"}>
             <Disc />
-            <span>Albúns</span>
-         </div>
-
-         <div className={sidebar["category-container"]}>
-            <div
-               className={`${sidebar["category-item"]} ${sidebar["with-subcategory"]}`}
-               onClick={() => handleOpenCategory("starlist")}
-            >
-               <ListIcon />
-               <span>Listas Especiais</span>
-               <Arrow className={starList ? sidebar["opened-category"] : ""}/>
-            </div>
-
-            <ul className={`${sidebar["sub-category"]} ${starList ? sidebar["open-sub-category"] : ""}`}>
-               <li>Mais ouvidas</li>
-               <li>Melhores rocks</li>
-               <li>Top 10 Sertanejos</li>
-               <li>Top 20 Rocks</li>
-               <li>Anos 80</li>
-            </ul>
-         </div>
-
-         <div className={sidebar["category-container"]}>
-            <div
-               className={`${sidebar["category-item"]} ${sidebar["with-subcategory"]}`}
-               onClick={() => handleOpenCategory("playlist")}
-            >
-               <Playlist />
-               <span>Playlists</span>
-               <Arrow className={playlist ? sidebar["opened-category"] : ""}/>
-
-            </div>
-
-            <ul className={`${sidebar["sub-category"]} ${playlist ? sidebar["open-sub-category"] : ""}`}>
-               <li>Melhores Jorge e Mateus</li>
-               <li>Red Hot Chilly Peppers</li>
-               <li>Edson Gomes Melhores</li>
-               <li>Verão 2021</li>
-            </ul>
-         </div>
-
-         <div className={sidebar["category-item"]}
-            onClick={handleQueue}
-         >
+            Albums
+         </CategoryItem>
+         <CategoryItem path={"search"} unique>
+            <Search />
+            Pesquisar
+         </CategoryItem>
+         <CategoryItem  path={"artists"}>
+            <Artist />
+            Artista
+         </CategoryItem>
+         <CategoryItem path="geners" >
+            <Tag />
+            Genêros
+         </CategoryItem>
+         <CategoryItem >
+            <Folder />
+            Pastas
+         </CategoryItem>
+         <CategoryItem >
+            <ListIcon />
+            Listas Especiais
+         </CategoryItem>
+         <CategoryItem >
+            <Playlist path="playlists"/>
+            Playlists
+         </CategoryItem>
+         <CategoryItem unique>
             <Queue />
-            <span>Fila</span>
-         </div>
+            Fila
+         </CategoryItem>
+         <CategoryItem unique>
+            <Config />
+            Configuracões
+         </CategoryItem>
       </aside>
    )
 }

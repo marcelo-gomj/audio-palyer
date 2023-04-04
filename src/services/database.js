@@ -37,4 +37,3 @@ export const albums = (database) => {
       protoSort
    );
 }
-

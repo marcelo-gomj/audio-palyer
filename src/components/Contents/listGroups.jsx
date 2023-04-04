@@ -16,11 +16,11 @@ export function ListGroups({ list }) {
    }, [cont.current]);
 
    const checkAlbum = memoizeWith(String, (index) => {
-      const music = list[index]
-      const paths = split("/")
+      const music = list[index];
+      const paths = split("/");
       const prev = list[index - 1];
       
-      const [musicDefault, albumDefault] = juxt([nth(-1), nth(-2)])(paths(music.path))
+      const [musicDefault, albumDefault] = juxt([nth(-1), nth(-2)])(paths(music.path));
       const albumName = or(music.album, albumDefault);
       const hasHeader = albumName !== or(prev?.album, nth(-2, paths(prev?.path || "")));
       
@@ -88,7 +88,6 @@ export function ListGroups({ list }) {
    }
 
    return (
-
       <div ref={cont} style={{ marginLeft: "4rem" }}>
          <VariableSizeList
             height={600}

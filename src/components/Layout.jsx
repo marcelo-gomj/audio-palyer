@@ -1,21 +1,19 @@
-import { AsideLayout } from "./Sidebar";
-import { FooterLayout } from "./Footer";
 import { ContentMain } from "./Contents/ContentMain";
 import { ModalProvider } from "./Contexts/ModalContext";
-import { useState } from "react";
+import { RouteProvider } from "./Contexts/RouteContext";
+import { FooterLayout } from "./Footer";
+import { AsideLayout } from "./Sidebar";
 
 export function Layout() {
-   const [category, setCategory] = useState("");
-
    return (
-      <ModalProvider>
-         <main>
-            <AsideLayout handleCategory={setCategory} />
-            <ContentMain 
-               category={category}
-            />
-         </main>
-         <FooterLayout />
-      </ModalProvider>
+      <RouteProvider>
+         <ModalProvider>
+            <main>
+               <AsideLayout />
+               <ContentMain />
+            </main>
+            <FooterLayout />
+         </ModalProvider>
+      </RouteProvider>
    )
 }

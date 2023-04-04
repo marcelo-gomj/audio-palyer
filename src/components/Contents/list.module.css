@@ -1,11 +1,14 @@
+.album{
+
+}
+
 .album-header{
    --min-height : calc(8rem + (  2px + 90px));
    display: flex;
    gap: 2rem;
-   padding: 4rem 0;
+   padding: 4rem 0 3rem;
    margin-top: 2rem;
    min-height: var(--min-height);
-   border-top: 2px solid rgb(25, 25, 25);
 }
 
 .album-header img{
@@ -38,21 +41,23 @@
 .album-details h3:hover{
    color: white;
    cursor: pointer;
-   text-decoration: underline;
 }
 
 .item-music{
-   color: rgba(255, 255, 255, 0.9);
-   margin: 0 1rem;
-   padding: .4rem 1rem;
+   color: rgba(255, 255, 255, 0.6);
+   margin: 0 .5rem;
+   padding: .5rem 1rem;
    font-weight: 400;
    cursor: pointer;
    border-radius: 25px;
+   border: 1.5px solid transparent;
+
+   transition: border .2s linear;
 }
 
 .item-music span {
    margin-right: 2rem;
-   color: rgba(255, 255, 255, 0.6);
+   color: rgba(255, 255, 255, 0.5);
 }
 
 .item-music:hover span{
@@ -66,5 +71,7 @@
 
 .item-music:hover{
    color: white;
-   background-color: rgb(16, 16, 16);
+   /* font-weight: 500; */
+   background-color: rgb(15, 15, 15);
+   border-color: rgba(255, 255, 255, 0.4);
 }
