@@ -19,11 +19,11 @@ export function ListGroups({ list }) {
       const music = list[index];
       const paths = split("/");
       const prev = list[index - 1];
-      
+
       const [musicDefault, albumDefault] = juxt([nth(-1), nth(-2)])(paths(music.path));
       const albumName = or(music.album, albumDefault);
       const hasHeader = albumName !== or(prev?.album, nth(-2, paths(prev?.path || "")));
-      
+
       return {
          music,
          hasHeader,
@@ -55,7 +55,7 @@ export function ListGroups({ list }) {
                   className={albums["album-header"]}
                >
                   {
-                     music.album && <Image path={music.path} />
+                     <Image hasAlbum={music?.album} path={music.path} />
                   }
 
                   <div className={albums["album-details"]}>
@@ -71,11 +71,15 @@ export function ListGroups({ list }) {
                </div>
             }
 
-            <li 
-               className={albums["item-music"]}
-            >
-               <span>{track}</span> {or(music.title, musicDefault)} <span>{segunds}</span>
-            </li>
+            {/* <div style={{ margin: ".6rem 0", position: "relative" }}>
+               <li
+                  className={albums["item-music"]}
+               >
+
+                  <span>{track}</span> {or(music.title, musicDefault)} <span>{segunds}</span>
+
+               </li>
+            </div> */}
 
          </div>
       )
@@ -84,18 +88,22 @@ export function ListGroups({ list }) {
    const getSiteItem = (index) => {
       const { hasHeader } = checkAlbum(index);
 
-      return hasHeader ? (254 + 34) : 34;
+      // return hasHeader ? (254 + 44) : 44;
+      return hasHeader ? 150 : 0;
+
    }
 
    return (
-      <div ref={cont} style={{ marginLeft: "4rem" }}>
+      <div ref={cont} 
+         className={albums["albums-container"]}
+         style={{ marginLeft: "2.5rem", width: "calc(100% - 3rem)", height: "800px" }}>
          <VariableSizeList
-            height={600}
-            width={width}
+            width={"100%"}
+            height={800}
             itemCount={list.length}
             itemSize={getSiteItem}
          >
-            { Row }
+            {Row}
          </VariableSizeList>
 
       </div>

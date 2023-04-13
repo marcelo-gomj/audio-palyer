@@ -1,10 +1,13 @@
+.sidebar{
+   background: rgb(5, 5, 5);
+   width: 26rem;
+}
+
 .aside-container {
    display: flex;
    position: relative;
    flex-direction: column;
-   background: rgb(5, 5, 5);
    
-   width: 26rem;
    height: calc(100% - 2rem);
    margin: 2rem 0 0;
    overflow-y: auto;
@@ -91,7 +94,7 @@
 
 .sub-category li{
    padding: .6rem 0;
-   font-size: 0.95rem;
+   font-size: 0.94rem;
    color: rgb(200, 200, 200);
 
    font-weight: 400;

@@ -3,10 +3,10 @@ const { watch } = require('fs')
 
 const createWindow = () => {
    const win = new BrowserWindow({
-      width: 800,
+      width: 1000,
       height: 600,
-      minWidth: 700,
-      minHeight: 500,
+      minWidth: 900,
+      minHeight: 600,
       webPreferences: {
          nodeIntegration: true,
          contextIsolation: false,

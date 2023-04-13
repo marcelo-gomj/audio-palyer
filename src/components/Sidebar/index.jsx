@@ -1,5 +1,3 @@
-
-import { useState } from "react";
 import sidebar from "./sidebar.module.css";
 
 import Arrow from "../assets/arrow.svg";
@@ -15,46 +13,48 @@ import Tag from "../assets/tag.svg"
 
 import { CategoryItem } from "./CategoryItem";
 
-export function AsideLayout({ handleCategory }) {
+export function AsideLayout() {
 
    return (
-      <aside className={sidebar["aside-container"]}>
-         <CategoryItem  path={"albums"}>
-            <Disc />
-            Albums
-         </CategoryItem>
-         <CategoryItem path={"search"} unique>
-            <Search />
-            Pesquisar
-         </CategoryItem>
-         <CategoryItem  path={"artists"}>
-            <Artist />
-            Artista
-         </CategoryItem>
-         <CategoryItem path="geners" >
-            <Tag />
-            Genêros
-         </CategoryItem>
-         <CategoryItem >
-            <Folder />
-            Pastas
-         </CategoryItem>
-         <CategoryItem >
-            <ListIcon />
-            Listas Especiais
-         </CategoryItem>
-         <CategoryItem >
-            <Playlist path="playlists"/>
-            Playlists
-         </CategoryItem>
-         <CategoryItem unique>
-            <Queue />
-            Fila
-         </CategoryItem>
-         <CategoryItem unique>
-            <Config />
-            Configuracões
-         </CategoryItem>
+      <aside className={sidebar["sidebar"]}>
+         <div className={sidebar["aside-container"]}>
+            <CategoryItem path={"albums"} unique>
+               <Disc />
+               Albums
+            </CategoryItem>
+            <CategoryItem path={"search"} unique>
+               <Search />
+               Pesquisar
+            </CategoryItem>
+            <CategoryItem path={"artists"}>
+               <Artist />
+               Artista
+            </CategoryItem>
+            <CategoryItem path="geners" >
+               <Tag />
+               Genêros
+            </CategoryItem>
+            <CategoryItem >
+               <Folder />
+               Pastas
+            </CategoryItem>
+            <CategoryItem >
+               <ListIcon />
+               Listas Especiais
+            </CategoryItem>
+            <CategoryItem >
+               <Playlist path="playlists" />
+               Playlists
+            </CategoryItem>
+            <CategoryItem unique>
+               <Queue />
+               Fila
+            </CategoryItem>
+            <CategoryItem unique>
+               <Config />
+               Configuracões
+            </CategoryItem>
+         </div>
       </aside>
    )
 }

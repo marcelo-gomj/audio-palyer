@@ -8,7 +8,7 @@ import Arrow from "../assets/arrow.svg";
 function Category({ children, path, items, unique }) {
    const [subCategory, setSubCategory] = useState(false);
    const [subItems, setSubItems] = useState([]);
-   const { setRoute } = useContext(RouteContext);
+   const { setRoute, route } = useContext(RouteContext);
 
    function fetchSubList( path ){
       setSubItems(lib[path] || ["sem conteúdo"])
@@ -17,6 +17,7 @@ function Category({ children, path, items, unique }) {
    return (
       <>
          <div className={sidebar["category-item"]}
+            style={path === route ? { color: "white" } : {}}
             onClick={() => {
                setSubCategory(!subCategory);
                setRoute(path);
@@ -24,7 +25,9 @@ function Category({ children, path, items, unique }) {
             }}
          >
             { children }
-            { unique ? null : <Arrow className={subCategory ? sidebar["opened-category"] : ""} /> }
+            { unique ? null : 
+               <Arrow className={subCategory ? sidebar["opened-category"] : ""} /> 
+            }
          </div>
 
          { unique ? null : (
@@ -39,8 +42,6 @@ function Category({ children, path, items, unique }) {
 }
 
 export function CategoryItem(props){
-   console.log(props.unique)
-
    return (
       props?.unique ?
       

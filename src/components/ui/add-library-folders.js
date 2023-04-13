@@ -110,7 +110,6 @@ const modalSelectLibrary = (content) => {
    content.appendChild(modalSelect);
 
    query(".button-select-sources").addEventListener('click', async (e) => {
-      console.log("CLIQUEI")
       const { paths } = config("sources") || {};
 
       addFolders()

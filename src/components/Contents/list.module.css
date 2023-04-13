@@ -1,17 +1,26 @@
-.album{
-
+.albums-container{
+   display: flex;
 }
 
 .album-header{
-   --min-height : calc(8rem + (  2px + 90px));
+   /* --min-height : calc(8rem + ( 4px + 90px)); */
    display: flex;
    gap: 2rem;
-   padding: 4rem 0 3rem;
-   margin-top: 2rem;
-   min-height: var(--min-height);
+   /* padding: 4rem 0 3rem; */
+   margin: 2rem 0 1rem;
+   padding: 1rem 2rem;
+   /* min-height: var(--min-height); */
+   border-radius: 4px;
+   cursor: pointer;
+
+   transition: all 0.2s ease;
 }
 
-.album-header img{
+.album-header:hover {
+   background-color: rgba(20, 20, 20);
+}
+
+.album-header img, .album-image-placeholder {
    width: 90px;
    height: 90px;
    border-radius: 4px;
@@ -44,15 +53,12 @@
 }
 
 .item-music{
-   color: rgba(255, 255, 255, 0.6);
+   color: rgba(240, 240, 240);
    margin: 0 .5rem;
-   padding: .5rem 1rem;
+   padding: .75rem 1rem;
    font-weight: 400;
    cursor: pointer;
-   border-radius: 25px;
-   border: 1.5px solid transparent;
-
-   transition: border .2s linear;
+   border-radius: 20px;
 }
 
 .item-music span {
@@ -71,7 +77,4 @@
 
 .item-music:hover{
    color: white;
-   /* font-weight: 500; */
-   background-color: rgb(15, 15, 15);
-   border-color: rgba(255, 255, 255, 0.4);
 }
