@@ -103,12 +103,12 @@
 
 .album-item img{
    margin: 0 auto;
-   border-radius: 6px;
+   border-radius: 8px;
    width: 7.5rem;
    height: 7.5rem;
 
    border: 3px solid transparent;
-   outline: 2px solid transparent;
+   outline: 2px solid rgba(255, 255, 255, 0.1);
 
    animation: show .2s ease;
    transition: outline-color .2s ease;

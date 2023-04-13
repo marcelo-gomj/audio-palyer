@@ -1,5 +1,4 @@
 const { app, BrowserWindow, globalShortcut, ipcMain, dialog } = require("electron");
-const { watch } = require('fs')
 
 const createWindow = () => {
    const win = new BrowserWindow({
@@ -29,10 +28,6 @@ const createWindow = () => {
    })
 
    win.loadURL("http://localhost:3000");
-
-   watch('./dist/index.html', () => {
-      win.reload()
-   })
 
    app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) {

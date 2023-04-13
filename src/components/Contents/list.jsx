@@ -66,7 +66,7 @@ export function ListAlbums({ list }) {
                width={"100%"}
                height={900}
                itemCount={albums.length}
-               itemSize={300}
+               itemSize={280}
             >{
                row
             }</FixedSizeList>

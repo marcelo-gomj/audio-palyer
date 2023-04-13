@@ -21,25 +21,25 @@ export function Image({ path, hasAlbum }) {
          }
       }
 
-      // const observer = new IntersectionObserver(([entry]) => {
-      //    if (entry.isIntersecting) {
+      const observer = new IntersectionObserver(([entry]) => {
+         if (entry.isIntersecting) {
             getBuffer()
-      //       observer.disconnect();
-      //    }
-      // }, { threshold: 0, delay: 0 });
+            observer.disconnect();
+         }
+      }, { threshold: 0, delay: 0 });
 
-      // observer.observe(imgRef.current)
+      observer.observe(imgRef.current)
 
-      // return () => {
-      //    observer.disconnect();
-      // };
+      return () => {
+         observer.disconnect();
+      };
    }, [path])
 
    if (!loaded) {
       return (
          <div ref={imgRef} style={{
             display: "flex", alignItems: "center", justifyContent: "center",
-            minWidth: "8rem", height: "8rem",
+            minWidth: "7.5rem", height: "7.5rem",
             background: "rgb(15, 15, 15)", borderRadius: "6px",
          }}>
             {!hasAlbum && <DiscDefault style={{ opacity: 0.4, width: "85px", height: "85px" }}/>}
