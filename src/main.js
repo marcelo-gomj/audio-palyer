@@ -54,3 +54,4 @@ ipcMain.handle('open-dialog', async (event, options) => {
 ipcMain.handle('get-user-data-path', (event) => {
    return app.getPath('userData');
 });
+

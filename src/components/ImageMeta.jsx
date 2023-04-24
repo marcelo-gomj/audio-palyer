@@ -1,5 +1,7 @@
-import { useEffect, useState, useRef } from "react";
-import { imageBuffer } from "../util/util.js";
+import { useEffect, useRef, useState } from "react";
+// import { imageBuffer } from "../util/util.js";
+const { parseNodeStream } = require("music-metadata-browser");
+const { createReadStream } = require("fs");
 
 import DiscDefault from "./assets/disc.svg";
 
@@ -8,47 +10,56 @@ export function Image({ path, hasAlbum }) {
    const imgRef = useRef(null);
 
    useEffect(() => {
-      async function getBuffer() {
-         const resBuffer = await imageBuffer(path);
-         
-         if(resBuffer?.buffer){
-            const { format, buffer } = resBuffer;
+      async function reduceImage(path) {
+         const { common: { picture } } = await parseNodeStream(createReadStream(path));
+         const buffer = picture?.[0].data;
+         const format = picture?.[0].format;
 
+         if (buffer) {
             setLoaded({
-               buffer: buffer.toString('base64'),
+               buffer,
                format
             })
          }
+
+         if (!picture) {
+            setLoaded(undefined)
+         }
       }
+
 
       const observer = new IntersectionObserver(([entry]) => {
          if (entry.isIntersecting) {
-            getBuffer()
+            reduceImage(path)
             observer.disconnect();
          }
-      }, { threshold: 0, delay: 0 });
+      }, { threshold: 0, delay: 100 });
 
       observer.observe(imgRef.current)
 
       return () => {
          observer.disconnect();
       };
-   }, [path])
+   }, [])
 
-   if (!loaded) {
-      return (
-         <div ref={imgRef} style={{
-            display: "flex", alignItems: "center", justifyContent: "center",
-            minWidth: "7.5rem", height: "7.5rem",
-            background: "rgb(15, 15, 15)", borderRadius: "6px",
-         }}>
-            {!hasAlbum && <DiscDefault style={{ opacity: 0.4, width: "85px", height: "85px" }}/>}
+
+   return (
+      !loaded ?
+         <div
+            ref={imgRef}
+            style={{
+               display: "flex", alignItems: "center", justifyContent: "center",
+               minWidth: "7.5rem", height: "7.5rem",
+               background: "rgb(15, 15, 15)", borderRadius: "6px",
+            }}>
+            {loaded === undefined && <DiscDefault style={{ opacity: 0.4, width: "85px", height: "85px" }} />}
          </div>
-      )
-   }
 
-   return <img
-      loading={"lazy"}
-      src={`data:${loaded.format};base64,${loaded.buffer}`}
-   />
+         :
+
+         <img
+            // loading="lazy"
+            src={`data:${loaded.format};base64,${loaded.buffer.toString("base64")}`}
+         />
+   )
 }

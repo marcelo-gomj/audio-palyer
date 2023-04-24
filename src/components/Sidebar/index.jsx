@@ -18,7 +18,7 @@ export function AsideLayout() {
    return (
       <aside className={sidebar["sidebar"]}>
          <div className={sidebar["aside-container"]}>
-            <CategoryItem path={"albums"} unique>
+            <CategoryItem path={"album"}>
                <Disc />
                Albums
             </CategoryItem>
@@ -26,11 +26,11 @@ export function AsideLayout() {
                <Search />
                Pesquisar
             </CategoryItem>
-            <CategoryItem path={"artists"}>
+            <CategoryItem path={"artist"}>
                <Artist />
                Artista
             </CategoryItem>
-            <CategoryItem path="geners" >
+            <CategoryItem path="genre" >
                <Tag />
                Genêros
             </CategoryItem>

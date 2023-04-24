@@ -1,14 +1,14 @@
-.albums-container{
+.albums-container {
    display: flex;
 }
 
-.album-header{
+.album-header {
    /* --min-height : calc(8rem + ( 4px + 90px)); */
    display: flex;
    gap: 2rem;
    /* padding: 4rem 0 3rem; */
-   margin: 2rem 0 1rem;
-   padding: 1rem 2rem;
+   /* margin: 2rem 0 1rem; */
+   /* padding: 1rem 2rem; */
    /* min-height: var(--min-height); */
    border-radius: 4px;
    cursor: pointer;
@@ -20,7 +20,8 @@
    background-color: rgba(20, 20, 20);
 }
 
-.album-header img, .album-image-placeholder {
+.album-header img,
+.album-image-placeholder {
    width: 90px;
    height: 90px;
    border-radius: 4px;
@@ -32,27 +33,28 @@
    align-items: space-between;
 }
 
-.album-details-bottom{
+.album-details-bottom {
    color: rgba(255, 255, 255, 0.4);
 }
 
-.album-details h2{
+.album-info h2 {
    font-weight: 600;
+   font-size: 1.2rem;
 }
 
-.album-details h3{
+.album-details h3 {
    font-size: 1rem;
    margin: .5rem 0;
    font-weight: 500;
    color: rgb(255, 255, 255, .6);
 }
 
-.album-details h3:hover{
+.album-details h3:hover {
    color: white;
    cursor: pointer;
 }
 
-.item-music{
+.item-music {
    color: rgba(240, 240, 240);
    margin: 0 .5rem;
    padding: .75rem 1rem;
@@ -66,7 +68,7 @@
    color: rgba(255, 255, 255, 0.5);
 }
 
-.item-music:hover span{
+.item-music:hover span {
    color: white;
 }
 
@@ -75,6 +77,6 @@
    right: 2rem;
 }
 
-.item-music:hover{
+.item-music:hover {
    color: white;
 }

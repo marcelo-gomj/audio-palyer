@@ -1,14 +1,12 @@
 const { parseNodeStream } = require("music-metadata-browser");
 const { createReadStream } = require("fs");
 
-export const imageBuffer = async ( path ) => {
-   try{
-      const { common } = await parseNodeStream(createReadStream(path));
-      const buffer = common?.picture[0]?.data
-      const format = common?.picture[0]?.format
+export const imageBuffer = async (path) => {
+   try {
+
 
       return { buffer, format };
-   }catch(err){
+   } catch (err) {
       return null
    }
 }

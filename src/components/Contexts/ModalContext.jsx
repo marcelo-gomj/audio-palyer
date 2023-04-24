@@ -24,7 +24,7 @@ export function ModalProvider({ children }) {
       <ModalContext.Provider
          value={{ isOpen, openModal, closeModal }}
       >
-         { children }
+         {children}
 
          <Modal title={modalTitle} content={modalContent} />
       </ModalContext.Provider>

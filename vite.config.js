@@ -1,12 +1,11 @@
 const { defineConfig } = require('vite');
 const react = require("@vitejs/plugin-react");
+
 import svgx from "@svgx/vite-plugin-react";
-import electron from "vite-plugin-electron"
+import electron from "vite-plugin-electron";
+
 module.exports = defineConfig({
   root: "./src",
-  // optimizeDeps: {
-  //   include: ['music-metadata/lib/index'],
-  // },
   plugins: [
     react(),
     svgx(),

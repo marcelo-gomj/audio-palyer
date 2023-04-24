@@ -4,9 +4,11 @@
 // const { config } = require("../src/config");
 // const { isEmpty } = require('ramda');
 // const solid = require("solid-js")
-import React from "react";
+import React, { useEffect } from "react";
 import { Layout } from "./components/Layout";
+
 const App = () => {
+
   return (
       <React.StrictMode>
          <Layout />

@@ -1,12 +1,11 @@
+import { FixedSizeList } from "react-window";
 import { Image } from "../ImageMeta";
-
-import { 
-   pipe, uniqBy, split, 
-   join, init, splitEvery, nth, when,propSatisfies, 
-   take, append, gt, __ 
+import {
+   pipe, uniqBy, split,
+   join, init, splitEvery, nth, when, propSatisfies,
+   take, append, gt, __
 } from "ramda";
 
-import { FixedSizeList } from "react-window";
 
 import SearchIcon from "../assets/search.svg";
 
@@ -14,35 +13,44 @@ import styles from "./list-a.module.css";
 
 
 export function ListAlbums({ list }) {
-   const albums = splitEvery(3, uniqBy(
-      obj => obj?.album || join("", init(split("/", obj?.path || "música/pasta")))
-   )(list))
+   const albums = splitEvery(3, list);
 
    const row = ({ style, index }) => {
       const musics = albums[index];
 
       return (
-         <div style={style} className={styles["albums-row"]} key={musics[0]?.id}>
+         <div
+            style={style}
+            className={styles["albums-row"]}
+            key={musics?.[0].id}
+         >
             {
-               musics.map( music => {
-               const albumName = music?.album || nth( -2, split("/", music?.path)) || "";
+               musics.map((music, index) => {
+                  let albumName = music?.album || nth(-2, split("/", music.path));
 
-               const title = when( 
-                  propSatisfies(gt(__, 40), 'length'),
-                  pipe(take(40), append('…'), join(''))
-               )(split("", albumName))
+                  // const title = join("", when(
+                  //    propSatisfies(gt(__, 40), 'length'),
+                  //    pipe(take(40), append('…'))
+                  // )(split("", albumName)));
+                  if (albumName.length > 40) {
+                     albumName = albumName.slice(0, 40) + "..."
+                  }
 
-               return (
-                  <div className={styles["album-item"]}>
-                     
-                     <Image path={music?.path} />
+                  return (
+                     <div
+                        className={styles["album-item"]}
+                        key={index}
+                     >
 
-                     <div className={styles["album-info"]}>
-                        <h3>{title}</h3>
-                        <p>{(music?.artist || "")}</p><span>{music?.year ? " - " + music?.year : ""}</span>
+                        <Image path={music.path} />
+
+                        <div className={styles["album-info"]}>
+                           <h3>{albumName}</h3>
+                           <p>{(music?.artist || "")}</p><span>{music?.year ? " - " + music?.year : ""}</span>
+                        </div>
                      </div>
-                  </div>
-               )})
+                  )
+               })
             }
          </div>
       )
@@ -53,9 +61,9 @@ export function ListAlbums({ list }) {
          <div className={styles["header-list"]}>
             <div className={styles["header-input"]}>
                <SearchIcon />
-               <input 
+               <input
                   type="text"
-                  placeholder="Buscar albums" 
+                  placeholder="Buscar albums"
                />
             </div>
             <p>Ordem Alfabetica</p>
@@ -64,12 +72,12 @@ export function ListAlbums({ list }) {
          <div className={styles["albums-container"]}>
             <FixedSizeList
                width={"100%"}
-               height={900}
+               height={1000}
                itemCount={albums.length}
-               itemSize={280}
+               itemSize={300}
             >{
-               row
-            }</FixedSizeList>
+                  row
+               }</FixedSizeList>
          </div>
       </div>
    )
