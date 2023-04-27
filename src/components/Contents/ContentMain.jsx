@@ -1,9 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-// import { createDatabase, read, count, albums } from "../../services/database.js";
 import { RouteContext } from "../Contexts/RouteContext";
-import { ListGroups } from "./listGroups.jsx";
-import { ListAlbums } from "./list.jsx"
-import styles from "./content.module.css";
+import { ListAlbums } from "./Albums.jsx"
 import { prisma } from "../../services/prisma.js";
 
 export function ContentMain() {
@@ -17,18 +14,19 @@ export function ContentMain() {
    }, [route])
 
    return (
-      <div className={styles["content"]}>
+      <div
+         className="relative w-full"
+      >
          {content}
       </div>
    )
 }
 
 async function getContent(route) {
-   switch (route) {
+   switch (route.path) {
       case "":
          return <div style={{ color: "white" }}>INICIO DO CONTENT</div>;
-      case "album":
-         // return <div>ALBUMS</div>
+      case "albums":
          return prisma.albums.findMany({
             distinct: ["album"],
             select: {

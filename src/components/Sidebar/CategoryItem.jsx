@@ -1,14 +1,10 @@
 import { useState, useContext } from "react";
 import { RouteContext } from "../Contexts/RouteContext";
-// import { lib } from "./lib";
-// import { read, createDatabase } from "../../services/database";
-import * as R from 'ramda';
 import { prisma } from "../../services/prisma.js"
 
-import sidebar from "./sidebar.module.css";
 import Arrow from "../assets/arrow.svg";
 
-function Category({ children, path, items, unique }) {
+export function CategoryItem({ children, path, items, unique }) {
    const [subCategory, setSubCategory] = useState(false);
    const [subItems, setSubItems] = useState([]);
    const { setRoute, route } = useContext(RouteContext);
@@ -26,29 +22,31 @@ function Category({ children, path, items, unique }) {
          }
       )
 
-      console.log("data", res)
-
       setSubItems(
          res
       )
 
    }
 
+
    return (
       <>
-         <div className={sidebar["category-item"]}
+         <div
+            className={`flex group ${path === route ? "text-white" : "text-white-800"} sticky top-0 py-4 cursor-pointer bg-black-80 px-1 items-center gap-6 text-base ml-5 text-opacity-80 z-50`}
             style={path === route ? { color: "white" } : {}}
             onClick={() => {
                setSubCategory(!subCategory);
-               if (subCategory) setRoute(path);
-               fetchSubList(path);
+               setRoute(path);
+               if (path !== route) fetchSubList(path);
             }}
          >
             {children}
             {unique ?
                null
                :
-               <Arrow className={subCategory ? sidebar["opened-category"] : ""} />
+               <Arrow
+                  className={`absolute right-5 w-5 ${subCategory && "rotate-90"} opacity-80 group-hover:opacity-100`}
+               />
             }
          </div>
 
@@ -57,27 +55,18 @@ function Category({ children, path, items, unique }) {
             :
             (
                <ul
-                  className={`${sidebar["sub-category"]} ${subCategory ? sidebar["open-sub-category"] : ""}`}
+                  className={`${subCategory ? "block" : "hidden"} my-4 ml-8`}
                >
                   {subItems.map((item, index) => (
-                     <li key={index}>{item[path] || "Desconhecido"}</li>
+                     <li
+                        className="py-2 text-[0.94rem] text-white-500 cursor-pointer hover:text-white transition-colors ease-linear duration-150"
+                        key={item[path]}
+                     >
+                        {item[path] || "Desconhecido"}
+                     </li>
                   ))}
                </ul>
             )}
       </>
-   )
-}
-
-export function CategoryItem(props) {
-   return (
-      props?.unique ?
-
-         <Category {...props} />
-
-         :
-
-         <div className={sidebar["category-container"]}>
-            <Category {...props} />
-         </div>
    )
 }

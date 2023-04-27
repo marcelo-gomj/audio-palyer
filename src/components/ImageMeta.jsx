@@ -35,7 +35,11 @@ export function Image({ path, hasAlbum }) {
          }
       }, { threshold: 0, delay: 100 });
 
-      observer.observe(imgRef.current)
+      try {
+         observer.observe(imgRef.current)
+      } catch (error) {
+
+      }
 
       return () => {
          observer.disconnect();
@@ -44,22 +48,21 @@ export function Image({ path, hasAlbum }) {
 
 
    return (
-      !loaded ?
-         <div
-            ref={imgRef}
-            style={{
-               display: "flex", alignItems: "center", justifyContent: "center",
-               minWidth: "7.5rem", height: "7.5rem",
-               background: "rgb(15, 15, 15)", borderRadius: "6px",
-            }}>
-            {loaded === undefined && <DiscDefault style={{ opacity: 0.4, width: "85px", height: "85px" }} />}
-         </div>
+      <div
+         ref={imgRef}
+         style={{ animation: "opacity-animation 6s ease 6s" }}
+         className="flex w-28 h-28 bg-15 items-center justify-center rounded-md overflow-hidden outline outline-offset-4 outline-2 outline-opacity group-hover:outline-white"
+      >{
+            !loaded ?
 
-         :
+               loaded === undefined ?
+                  <DiscDefault className="opacity-30 w-20 h-20" /> : null
+               :
 
-         <img
-            // loading="lazy"
-            src={`data:${loaded.format};base64,${loaded.buffer.toString("base64")}`}
-         />
+               <img
+                  className="w-28 h-28 animate-[opacityAnimation_0.15s_ease]"
+                  src={`data:${loaded?.format};base64,${loaded.buffer.toString("base64")}`}
+               />
+         }</div>
    )
 }

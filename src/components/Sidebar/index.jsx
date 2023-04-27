@@ -1,5 +1,3 @@
-import sidebar from "./sidebar.module.css";
-
 import Arrow from "../assets/arrow.svg";
 import Disc from "../assets/disc.svg";
 import Playlist from "../assets/playlist.svg";
@@ -14,46 +12,40 @@ import Tag from "../assets/tag.svg"
 import { CategoryItem } from "./CategoryItem";
 
 export function AsideLayout() {
+   const categories = [
+      ["album", Disc, "Albums"],
+      ["search", Search, "Pesquisar", true],
+      ["artist", Artist, "Artista"],
+      ["genre", Tag, "Genêros"],
+      ["folder", Folder, "Pastas"],
+      ["starlist", ListIcon, "Listas Especiais"],
+      ["playlist", Playlist, "Playlists"],
+      ["queue", Queue, "Fila", true],
+      ["setting", Config, "Configuracões", true]
+   ]
 
    return (
-      <aside className={sidebar["sidebar"]}>
-         <div className={sidebar["aside-container"]}>
-            <CategoryItem path={"album"}>
-               <Disc />
-               Albums
-            </CategoryItem>
-            <CategoryItem path={"search"} unique>
-               <Search />
-               Pesquisar
-            </CategoryItem>
-            <CategoryItem path={"artist"}>
-               <Artist />
-               Artista
-            </CategoryItem>
-            <CategoryItem path="genre" >
-               <Tag />
-               Genêros
-            </CategoryItem>
-            <CategoryItem >
-               <Folder />
-               Pastas
-            </CategoryItem>
-            <CategoryItem >
-               <ListIcon />
-               Listas Especiais
-            </CategoryItem>
-            <CategoryItem >
-               <Playlist path="playlists" />
-               Playlists
-            </CategoryItem>
-            <CategoryItem unique>
-               <Queue />
-               Fila
-            </CategoryItem>
-            <CategoryItem unique>
-               <Config />
-               Configuracões
-            </CategoryItem>
+      <aside
+         className="md:w-3/6 lg:w-2/6 bg-black-80"
+      // className={sidebar["sidebar"]}
+      >
+         <div
+            className="flex relative flex-col h-[calc(100%-2rem)] my-8 overflow-y-auto"
+         >
+            {
+               categories.map(([path, Icon, text, unique]) => {
+                  return (
+                     <CategoryItem
+                        key={path} path={path} unique={!!unique}
+                     >
+                        <Icon
+                           className="w-6 h-6 opacity-50 group-hover:opacity-100"
+                        />
+                        <span className=" group-hover:text-white">{text}</span>
+                     </CategoryItem>
+                  )
+               })
+            }
          </div>
       </aside>
    )
