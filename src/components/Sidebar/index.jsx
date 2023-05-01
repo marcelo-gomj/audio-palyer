@@ -1,3 +1,5 @@
+import { useContext } from "react";
+
 import Arrow from "../assets/arrow.svg";
 import Disc from "../assets/disc.svg";
 import Playlist from "../assets/playlist.svg";
@@ -10,8 +12,11 @@ import Folder from "../assets/folder-icon.svg";
 import Tag from "../assets/tag.svg"
 
 import { CategoryItem } from "./CategoryItem";
+import { RouteContext } from "../Contexts/RouteContext";
 
 export function AsideLayout() {
+   const { route } = useContext(RouteContext);
+
    const categories = [
       ["album", Disc, "Albums"],
       ["search", Search, "Pesquisar", true],
@@ -27,21 +32,27 @@ export function AsideLayout() {
    return (
       <aside
          className="md:w-3/6 lg:w-2/6 bg-black-80"
-      // className={sidebar["sidebar"]}
       >
          <div
             className="flex relative flex-col h-[calc(100%-2rem)] my-8 overflow-y-auto"
          >
             {
                categories.map(([path, Icon, text, unique]) => {
+                  const activePath = path === route.path;
+
                   return (
                      <CategoryItem
                         key={path} path={path} unique={!!unique}
                      >
                         <Icon
-                           className="w-6 h-6 opacity-50 group-hover:opacity-100"
+                           className={`w-5 h-5 group-hover:opacity-100 ${activePath ? "opacity-100" : "opacity-60"}`}
                         />
-                        <span className=" group-hover:text-white">{text}</span>
+
+                        <span
+                           className={`${activePath && "text-white"} font-medium text-lg group-hover:text-white`}
+                        >
+                           {text}
+                        </span>
                      </CategoryItem>
                   )
                })

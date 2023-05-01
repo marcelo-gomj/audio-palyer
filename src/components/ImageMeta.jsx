@@ -5,7 +5,7 @@ const { createReadStream } = require("fs");
 
 import DiscDefault from "./assets/disc.svg";
 
-export function Image({ path, hasAlbum }) {
+export function Image({ path, len, hasAlbum }) {
    const [loaded, setLoaded] = useState(null);
    const imgRef = useRef(null);
 
@@ -44,14 +44,14 @@ export function Image({ path, hasAlbum }) {
       return () => {
          observer.disconnect();
       };
-   }, [])
+   }, [path])
 
 
    return (
       <div
          ref={imgRef}
          style={{ animation: "opacity-animation 6s ease 6s" }}
-         className="flex w-28 h-28 bg-15 items-center justify-center rounded-md overflow-hidden outline outline-offset-4 outline-2 outline-opacity group-hover:outline-white"
+         className={`flex ${len} bg-15 items-center justify-center rounded-md overflow-hidden outline outline-offset-4 outline-2 outline-opacity group-hover:outline-white`}
       >{
             !loaded ?
 
@@ -60,7 +60,7 @@ export function Image({ path, hasAlbum }) {
                :
 
                <img
-                  className="w-28 h-28 animate-[opacityAnimation_0.15s_ease]"
+                  className={`${len} animate-[opacityAnimation_0.15s_ease]`}
                   src={`data:${loaded?.format};base64,${loaded.buffer.toString("base64")}`}
                />
          }</div>

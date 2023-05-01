@@ -86,23 +86,28 @@ const verifyFoldersAndSubfolders = async (paths) => {
          console.log(counter + " de " + len);
 
          const {
-            common: { album, artist, genre, label, track, year },
+            common: {
+               album, title, artist, genre,
+               label, track, year
+            },
             format: { duration }
          } = await parseFile(file);
-
 
          metadatas.push(
             prisma.albums.create({
                data: {
-                  title: album || null,
+                  title: title || null,
                   artist: artist || null,
                   album: album || null,
                   genre: genre?.[0] || null,
                   label: label?.[0] || null,
                   track: track?.no || null,
                   year: year || null,
-
+                  folder: R.compose(R.join(""), R.init)(R.split("/", file)),
                   path: file,
+                  played: 0,
+                  reated: 0,
+                  lyrics: null,
                   duration: duration
                }
             })

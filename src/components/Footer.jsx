@@ -1,6 +1,10 @@
 export function FooterLayout() {
 
    return (
-      <footer></footer>
+      <footer
+         className="relative bg-black-200 z-50 w-full h-[10%]"
+      >
+
+      </footer>
    )
 }

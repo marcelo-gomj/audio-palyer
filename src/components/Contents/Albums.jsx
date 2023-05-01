@@ -1,18 +1,44 @@
+import { prisma } from "../../services/prisma";
+import { useContext, useEffect, useState } from "react";
+
 import { FixedSizeList } from "react-window";
 import { Image } from "../ImageMeta";
+import { RouteContext } from "../Contexts/RouteContext";
+
 import {
-   pipe, uniqBy, split,
-   join, init, splitEvery, nth, when, propSatisfies,
-   take, append, gt, __
+   split, splitEvery, nth, __
 } from "ramda";
 
-import { useContext } from "react";
 import SearchIcon from "../assets/search.svg";
-import { RouteContext } from "../Contexts/RouteContext";
-import styles from "./fix-heigth.module.css";
+import styles from "./fix.module.css";
 
-export function ListAlbums({ list }) {
-   const albums = splitEvery(3, list);
+export function ListAlbums({ list, path }) {
+   const [albumsList, setAlbumsList] = useState([]);
+
+   async function queryAlbumsGroup() {
+      const queryAlbums = await prisma.albums.findMany({
+         distinct: [path],
+         select: {
+            album: true, title: true, path: true, artist: true, year: true
+         },
+         orderBy: {
+            album: "asc"
+         }
+      })
+
+      setAlbumsList(queryAlbums)
+   }
+
+   useEffect(() => {
+      queryAlbumsGroup()
+   }, []);
+
+   if (!albumsList.length) {
+      return ""
+   }
+
+
+   const albums = splitEvery(3, albumsList);
    const { route, setRoute } = useContext(RouteContext);
 
    const row = ({ style, index }) => {
@@ -47,7 +73,7 @@ export function ListAlbums({ list }) {
                         }}
                      >
 
-                        <Image path={music.path} />
+                        <Image path={music.path} len={"w-[7.5rem] h-[7.5rem]"} />
 
                         <div
                            className="text-center"
