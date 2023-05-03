@@ -11,6 +11,9 @@ module.exports = {
           "0%": { opacity: 0.2 },
           "100%": { opacity: 1 }
         }
+      },
+      spacing: {
+        "1/2": "1.5px"
       }
     },
     colors: {
@@ -22,6 +25,7 @@ module.exports = {
       "black-150": "rgb(15, 15, 15)",
       "black-200": "rgb(20, 20, 20)",
       "black-300": "rgb(30, 30, 30)",
+      "black-400": "rgb(40, 40, 40)",
       "white-400": "rgb(255, 255, 255, 0.4)",
       "white-500": "rgb(255, 255, 255, 0.5)",
       "white-800": "rgb(255, 255, 255, .8)",

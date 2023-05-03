@@ -7,20 +7,19 @@ export function ContentMain() {
    const [content, setContent] = useState(null);
 
    useEffect(() => {
-      const section = getContent(route);
-
-      console.log(section)
-      if (section) setContent(section)
-
-      return () => {
-         setContent(null)
+      if (route.path === "album" || route.id) {
+         const section = getContent(route);
+         setContent(section)
       }
+
+
+      // return () => {
+      //    setContent(null)
+      // }
    }, [route])
 
    return (
-      <div
-         className="relative w-full"
-      >
+      <div className="w-full">
          {content}
       </div>
    )

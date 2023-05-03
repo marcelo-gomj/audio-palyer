@@ -31,10 +31,10 @@ export function AsideLayout() {
 
    return (
       <aside
-         className="md:w-3/6 lg:w-2/6 bg-black-80"
+         className="md:w-3/6 lg:w-2/6 bg-black-80 h-full pt-8"
       >
          <div
-            className="flex relative flex-col h-[calc(100%-2rem)] my-8 overflow-y-auto"
+            className="flex relative flex-col h-full pr-2 overflow-y-auto"
          >
             {
                categories.map(([path, Icon, text, unique]) => {

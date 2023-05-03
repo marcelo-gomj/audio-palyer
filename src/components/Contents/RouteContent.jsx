@@ -19,8 +19,9 @@ export function getContent({ path, id }) {
          return getAlbums(path, id);
 
       case "artist":
-         // return <ListAlbums path={path} />
-         return null;
+      case "genre":
+         if (id) return <ListAlbums path={"album"} where={{ [path]: id }} />;
+         return;
 
       case "search":
          return null
@@ -31,10 +32,6 @@ export function getContent({ path, id }) {
          }
 
          return null
-
-      case "generes":
-         return null;
-
       case "playlist":
          return null;
 

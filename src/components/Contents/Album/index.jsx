@@ -1,17 +1,17 @@
+import { useContext, useEffect, useState } from "react";
+import * as R from "ramda";
+
 import { Image } from "../../ImageMeta";
 import { prisma } from "../../../services/prisma";
+import { PlayerContext } from "../../Contexts/PlayerContext";
 
 import Play from "../../assets/fill-play.svg";
 import Star from "../../assets/star.svg";
 import Dot from "../../assets/dot.svg";
 
-import * as R from "ramda";
-import { useEffect, useState } from "react";
-
-
 export function ListAlbum({ path, id }) {
    const [musics, updateMusics] = useState([]);
-
+   const { playMusicCurrent } = useContext(PlayerContext)
 
    useEffect(() => {
       prisma.albums.findMany({
@@ -76,7 +76,7 @@ export function ListAlbum({ path, id }) {
                   <h3
                      className="font-semibold text-2xl py-2"
                   >
-                     {details.album}
+                     {details.album || R.nth(1, R.split("/", details.path))}
                   </h3>
 
                   <div
@@ -99,7 +99,7 @@ export function ListAlbum({ path, id }) {
                className="flex gap-12 items-center text-white-500 font-semibold pb-2 mb-4 border-b-black-200"
             >
                <div
-                  className="flex gap-2 text-white cursor-pointer py-1.5 px-4 rounded-full bg-black-200 hover:bg-black-300 transition-[background_0.2s_ease]"
+                  className="flex gap-2 text-white cursor-pointer py-1.5 px-4 rounded-full bg-black-200 hover:bg-black-300 active:bg-black-150 transition-[background_0.2s_ease]"
                >
                   <Play />
                   <span>Reproduzir</span>
@@ -119,6 +119,9 @@ export function ListAlbum({ path, id }) {
                   return (
                      <div
                         key={music.id}
+                        onClick={() => {
+                           playMusicCurrent(musics, trackIndex)
+                        }}
                         className="flex shadow-none relative text-[0.95rem] py-2 my-1 px-4 rounded-md opacity-90 cursor-pointer hover:opacity-100 hover:bg-black-150 hover:font-semibold"
                      >
                         <span
@@ -127,7 +130,7 @@ export function ListAlbum({ path, id }) {
                            {music.track || "-"}
                         </span>
 
-                        <p>{music.title}</p>
+                        <p>{music.title || R.nth(2, R.split("/", music.path))}</p>
 
                         <span
                            className="flex absolute items-center right-4"
