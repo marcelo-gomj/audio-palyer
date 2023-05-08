@@ -4,14 +4,15 @@ import * as R from "ramda";
 import { Image } from "../../ImageMeta";
 import { prisma } from "../../../services/prisma";
 import { PlayerContext } from "../../Contexts/PlayerContext";
+import { ListMusics } from "./listMusics";
 
 import Play from "../../assets/fill-play.svg";
-import Star from "../../assets/star.svg";
-import Dot from "../../assets/dot.svg";
+import { playPauseMusic } from "../../../services/howler";
+
 
 export function ListAlbum({ path, id }) {
+   const { playMusic } = useContext(PlayerContext);
    const [musics, updateMusics] = useState([]);
-   const { playMusicCurrent } = useContext(PlayerContext)
 
    useEffect(() => {
       prisma.albums.findMany({
@@ -85,10 +86,12 @@ export function ListAlbum({ path, id }) {
                      {
                         [details.artist, details.genre, details.year].filter(item => item)
                            .map((item, index) => (
-                              <>
+                              <div
+                                 key={index}
+                              >
                                  <span className="opacity-50 mr-2">{index ? ", " : ""}</span>
                                  <span className="font-medium opacity-50 cursor-pointer hover:opacity-100">{item || "-"} </span>
-                              </>
+                              </div>
                            ))
                      }
                   </div>
@@ -99,6 +102,7 @@ export function ListAlbum({ path, id }) {
                className="flex gap-12 items-center text-white-500 font-semibold pb-2 mb-4 border-b-black-200"
             >
                <div
+                  onClick={() => playMusic(musics, 0)}
                   className="flex gap-2 text-white cursor-pointer py-1.5 px-4 rounded-full bg-black-200 hover:bg-black-300 active:bg-black-150 transition-[background_0.2s_ease]"
                >
                   <Play />
@@ -113,47 +117,10 @@ export function ListAlbum({ path, id }) {
             </footer>
          </header>
 
-         <div>
-            {
-               musics.map((music, trackIndex) => {
-                  return (
-                     <div
-                        key={music.id}
-                        onClick={() => {
-                           playMusicCurrent(musics, trackIndex)
-                        }}
-                        className="flex shadow-none relative text-[0.95rem] py-2 my-1 px-4 rounded-md opacity-90 cursor-pointer hover:opacity-100 hover:bg-black-150 hover:font-semibold"
-                     >
-                        <span
-                           className="pr-10"
-                        >
-                           {music.track || "-"}
-                        </span>
-
-                        <p>{music.title || R.nth(2, R.split("/", music.path))}</p>
-
-                        <span
-                           className="flex absolute items-center right-4"
-                        >
-                           <div className="flex col pr-10">
-                              {R.range(0, 5).map((_, index) => (
-                                 <span
-                                    key={index}
-                                    onClick={() => {
-                                       reateMusic(trackIndex, index)
-                                    }}
-                                 >{music.reated > index ? <Star /> : <Dot />}</span>
-                              ))}
-                           </div>
-
-
-                           {formatDuration(music.duration)}
-                        </span>
-                     </div>
-                  )
-               })
-            }
-         </div>
+         <ListMusics
+            items={musics}
+            reateMusic={reateMusic}
+         />
       </section>
    )
 }

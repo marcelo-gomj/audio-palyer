@@ -19,6 +19,7 @@ module.exports = {
     colors: {
       "15": "rgb(15, 15, 15)",
       "white": "white",
+      "red": "red",
       "opacity": "transparent",
       "black-80": "rgb(8, 8, 8)",
       "black-100": "rgb(10, 10, 10)",

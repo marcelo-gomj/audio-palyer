@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
-const { Howler, Howl } = require("howler");
-import * as R from "ramda";
-
+import { createHowler } from "../../services/howler";
+import { ListMusics } from "../Contents/Album/listMusics";
 export const PlayerContext = createContext(null);
 
 const musics = [
@@ -288,63 +287,38 @@ const musics = [
 ]
 
 export function PlayerProvider({ children }) {
-   const [howlerGlobal, setHowlerGlobal] = useState(null);
-   const [currentMusic, setCurrentMusic] = useState({
+   const [handleHowl, setHandleHowl] = useState(null);
+   const [musicContext, setMusicContext] = useState({
       musics: [],
       current: null
    });
 
-   const playing = useState(false);
-
    useEffect(() => {
-      console.log("CURRENTMUSIC", currentMusic);
-      console.log("HOWLER", howlerGlobal)
+      if (musicContext.current === null) return;
 
-      if (currentMusic?.musics.length) {
-         const path = currentMusic.musics[currentMusic.current].path;
+      const { current, musics } = musicContext;
+      const howlGlobal = createHowler(musics[current].path);
 
-         console.log("PATH", path);
+      setHandleHowl(() => howlGlobal)
 
-         const howl = new Howl({
-            src: [path],
-            autoPlay: true,
-            volume: 1,
-            html5: true
-         })
-
-         setHowlerGlobal(howl)
-
-         howl.play()
-
-         return () => {
-            howl.unload()
-         }
+      return () => {
+         howlGlobal(howl => howl.unload())
       }
 
-      console.log("HOWLER FASE FINAL", howlerGlobal)
+   }, [musicContext])
 
-   }, [currentMusic])
-
-   function setVolume(volume) {
-      if (howlerGlobal) {
-         howlerGlobal.volume = volume
-      }
-   }
-
-   function playMusicCurrent(musics, current) {
-      setCurrentMusic({
+   const playMusic = (musics, current) => {
+      setMusicContext({
          musics,
          current
-      })
+      });
    }
 
    return (
       <PlayerContext.Provider value={{
-         currentMusic: currentMusic.musics[currentMusic.current] || musics[0],
-         setVolume,
-         howl: howlerGlobal,
-         playMusicCurrent
-
+         currentMusic: musicContext.musics[musicContext.current] || musics[0],
+         handleHowl,
+         playMusic
       }}>
          {children}
       </PlayerContext.Provider>

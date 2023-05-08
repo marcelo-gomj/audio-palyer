@@ -4,13 +4,12 @@ import { AlbumStatus } from "./AlbumStatus";
 import { PlayerControllers } from "./PlayerControllers";
 
 export function PlayerFooter() {
-   const { currentMusic, howl } = useContext(PlayerContext);
-
+   const { currentMusic } = useContext(PlayerContext);
    const playingNow = currentMusic;
    const content = {
       title: playingNow.title,
       album: playingNow.album,
-      duration: (playingNow.duration / 60).toFixed(2),
+      duration: playingNow.duration.toFixed(2),
    }
 
    return (
@@ -23,7 +22,7 @@ export function PlayerFooter() {
                content={content}
             />
 
-            <PlayerControllers music={currentMusic} howl={howl} />
+            <PlayerControllers />
          </div>
       </footer>
    )
