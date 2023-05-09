@@ -17,7 +17,7 @@ export function ListMusics({ items, reateMusic }) {
       <div>
          {
             items.map((music, trackIndex) => {
-               const playingMusic = currentMusic.id === music.id;
+               const playingMusic = currentMusic?.id === music.id;
 
                return (
                   <div

@@ -20,15 +20,17 @@ const nextMusic = (howl, { musics, current }, next) => {
 
    const listLength = musics.length - 1;
 
-   if (listLength > current || listLength < current) return;
-
-
    if (store.get("shuffle")) {
       const randomMusic = Math.floor(Math.random() * listLength);
-      return randomMusic
+
+      return randomMusic === current ? (randomMusic + 1) : randomMusic;
    }
 
-   return next ? current++ : current--;
+   const prevMusic = next ? (current + 1) : (current - 1);
+
+   if (prevMusic > listLength || prevMusic < 0) return;
+
+   return prevMusic;
 }
 
 
@@ -59,5 +61,6 @@ export {
    createHowler,
    controlVolume,
    progressDuration,
+   nextMusic,
    playPauseMusic
 }

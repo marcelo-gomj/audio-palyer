@@ -15,33 +15,42 @@ import { useContext, useEffect, useState } from "react";
 import { calcDuration } from "../../util/util";
 import * as R from "ramda";
 import { BarProgress } from "./BarProgress";
-import { controlVolume, playPauseMusic } from "../../services/howler";
+import { controlVolume, nextMusic, playPauseMusic } from "../../services/howler";
 import { PlayerContext } from "../Contexts/PlayerContext";
+import { store } from "../../services/electronStore";
 
 export function PlayerControllers() {
-   const { handleHowl } = useContext(PlayerContext);
+   const { handleHowl, handleNextMusic } = useContext(PlayerContext);
    const [volume, setVolume] = useState(1)
 
+   function toggleShuffle() {
+      const shuffle = store.get("shuffle");
+
+      store.set("shuffle", !shuffle);
+
+   }
+
    const controllersIcons = [
-      { icons: [Shuffle], action: () => { } },
-      { icons: [Previous], action: () => { } },
+      { icons: [Shuffle], action: () => toggleShuffle() },
+      { icons: [Previous], action: () => handleNextMusic() },
       { icons: [Play], action: () => handleHowl(playPauseMusic) },
-      { icons: [Next], action: () => { } },
+      { icons: [Next], action: () => handleNextMusic(true) },
       { icons: [Repeat, Normal, RepeatOne], action: () => { } }
    ]
 
    function volumeBar(event) {
       const { clientX, currentTarget: { offsetLeft, offsetWidth } } = event;
-      const volume = Number(((clientX - offsetLeft) / offsetWidth).toFixed(3));
+      const volume = Number(((clientX - offsetLeft) / offsetWidth));
 
       handleHowl(controlVolume, volume);
-      setVolume(volume)
+      setVolume(volume);
    }
 
    const extraIcons = [
       Equalize,
       Maximize
-   ]
+   ];
+
    return (
       <div className="flex w-full h-full">
          <div className="flex flex-col py-1 w-9/12 gap-1 h-full ">
@@ -89,7 +98,9 @@ export function PlayerControllers() {
             <div className="inline-flex justify-end gap-5 h-full">
                {
                   extraIcons.map((Icon, index) => (
-                     <span key={index}><Icon className="h-[1.1rem] w-[1.1rem] opacity-75" /></span>
+                     <span key={index}>
+                        <Icon className="h-[1.1rem] w-[1.1rem] opacity-75" />
+                     </span>
                   ))
                }
             </div>

@@ -22,15 +22,21 @@ export function BarProgress() {
    }, [handleHowl]);
 
    function handleProgressBar({ clientX, currentTarget: { offsetLeft, offsetWidth } }) {
-      const progress = (currentMusic.duration / 100) * (((clientX - offsetLeft) / offsetWidth) * 100);
+      if (currentMusic) {
+         const progress = (currentMusic.duration / 100) * (((clientX - offsetLeft) / offsetWidth) * 100);
 
-      setDuration(
-         handleHowl(progressDuration, progress)
-      )
+         setDuration(
+            handleHowl(progressDuration, progress)
+         )
+      }
    }
 
    function handleTimeBar(duration) {
-      return ((duration / (currentMusic.duration)) * 100)
+      if (currentMusic) {
+         return ((duration / (currentMusic.duration)) * 100)
+      }
+
+      return 0
    }
 
    return (
@@ -58,7 +64,7 @@ export function BarProgress() {
 
          <p
             className="w-[3.3rem]"
-         >{calcDuration(currentMusic.duration)}</p>
+         >{calcDuration(currentMusic?.duration || 0)}</p>
       </div>
    )
 }
