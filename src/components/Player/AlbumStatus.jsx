@@ -7,7 +7,6 @@ import Disc from "../assets/disc.svg";
 
 export function AlbumStatus() {
    const { currentMusic } = useContext(PlayerContext);
-   console.log("CURRENT MUSIC", currentMusic)
    const status = {
       title: currentMusic?.title,
       album: currentMusic?.album,

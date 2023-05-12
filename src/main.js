@@ -9,6 +9,7 @@ const createWindow = () => {
       webPreferences: {
          nodeIntegration: true,
          contextIsolation: false,
+         // only development
          webSecurity: false
       }
    });
@@ -20,7 +21,7 @@ const createWindow = () => {
    })
 
    globalShortcut.register('CmdOrCtrl+Shift+I', () => {
-      const { webContents } = win
+      const { webContents } = win;
       if (!webContents.isDevToolsOpened()) {
          webContents.openDevTools()
       } else {
@@ -29,6 +30,7 @@ const createWindow = () => {
    })
 
    win.loadURL("http://localhost:3000");
+   // win.loadFile(path.join(__dirname, 'dist/index.html'))
 
    app.on('activate', () => {
       if (BrowserWindow.getAllWindows().length === 0) {

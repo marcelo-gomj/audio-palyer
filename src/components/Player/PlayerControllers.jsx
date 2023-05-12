@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import Play from "../assets/play.svg";
 import Previous from "../assets/previous.svg";
 import Next from "../assets/next.svg";
@@ -11,7 +12,6 @@ import Volume from "../assets/volume.svg";
 import Maximize from "../assets/fullscreen.svg";
 import Equalize from "../assets/equalize.svg";
 
-import { useContext, useEffect, useState } from "react";
 import { calcDuration } from "../../util/util";
 import * as R from "ramda";
 import { BarProgress } from "./BarProgress";
@@ -35,8 +35,8 @@ export function PlayerControllers() {
       { icons: [Previous], action: () => handleNextMusic() },
       { icons: [Play], action: () => handleHowl(playPauseMusic) },
       { icons: [Next], action: () => handleNextMusic(true) },
-      { icons: [Repeat, Normal, RepeatOne], action: () => { } }
-   ]
+      { icons: [Repeat, Normal], action: () => undefined },
+   ];
 
    function volumeBar(event) {
       const { clientX, currentTarget: { offsetLeft, offsetWidth } } = event;
@@ -60,15 +60,22 @@ export function PlayerControllers() {
             <div className="flex items-center h-full font-bold">
                <div className="flex gap-6 mx-auto h-full">
                   {
-                     controllersIcons.map(({ icons: [Icon, ActiveIcon], action }, index) => (
-                        <div
-                           className="flex items-center opacity-80 cursor-pointer h-full px-2 hover:opacity-100"
-                           onClick={action}
-                           key={index}
-                        >
-                           <Icon className="h-6 w-6 stroke-[2.5px]" />
-                        </div>
-                     ))
+                     controllersIcons.map(({ icons, action }, box) => {
+
+                        return (
+                           icons.map((Icon, index) => (
+
+                              <div
+                                 className="flex items-center opacity-80 cursor-pointer h-full px-2 hover:opacity-100"
+                                 onClick={action}
+                                 key={box + index}
+                              >
+                                 <Icon className="h-6 w-6 stroke-[2.5px]" />
+                              </div>
+
+                           ))
+                        )
+                     })
                   }
                </div>
             </div>

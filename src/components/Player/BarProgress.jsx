@@ -50,6 +50,7 @@ export function BarProgress() {
          <div
             className="flex relative items-center w-full h-full group"
             onClick={handleProgressBar}
+            onMouseDown={handleProgressBar}
          >
             <div
                className="relative w-full h-[0.25rem] rounded-lg bg-black-300 group-hover:h-[0.40rem] z-[999] overflow-hidden"

@@ -12,15 +12,11 @@ export function Layout() {
          <RouteProvider>
             <ModalProvider>
                <div className="h-full">
-
-                  {/* h-[calc(100%-4.5rem)] */}
                   <main className="flex relative w-full  h-[calc(100%-5.6rem)]">
                      <AsideLayout />
                      <ContentMain />
                   </main>
-
                   <PlayerFooter />
-
                </div>
             </ModalProvider>
          </RouteProvider>

@@ -18,14 +18,18 @@ export function SelectFolderButton() {
       openModal(
          "Selecione as pastas de Música",
          <SelectFolder />
-      )   
+      )
    }
 
    return (
-      <div className={modal["nothing-source-library"]}>
+      <div
+         // className={modal["nothing-source-library"]}
+         className="flex justify-center items-center w-full h-1/2"
+      >
          <div
-            className={modal["button-select-sources"]}
+            // className={modal["button-select-sources"]}
             onClick={handleModalSelectFolder}
+         // className="text-white"
          >Selecione pastas de músicas</div>
       </div>
    )
@@ -37,26 +41,26 @@ export function SelectFolder() {
    useEffect(() => {
       const { paths } = config("sources");
 
-      if(paths) setListFolders(paths); 
-   }, []);  
+      if (paths) setListFolders(paths);
+   }, []);
 
    function submitListFolders(paths) {
       setListFolders(paths);
       config("sources", { paths });
    }
 
-   async function handleAddFolders(){
+   async function handleAddFolders() {
       const options = { properties: ['openDirectory', 'multiSelections'] }
-      const pathResults  = await ipcRenderer.invoke('open-dialog', options);
+      const pathResults = await ipcRenderer.invoke('open-dialog', options);
 
       submitListFolders(uniq(concat(pathResults, listFolders)));
    }
 
-   function handleUpdateSource(){
+   function handleUpdateSource() {
 
    }
 
-   function handleRemoveFolder(index){
+   function handleRemoveFolder(index) {
       const paths = remove(index, 1, listFolders)
       submitListFolders(paths);
    }
@@ -73,15 +77,15 @@ export function SelectFolder() {
                      }
 
                      return (
-                        <li 
-                           key={folder} 
+                        <li
+                           key={folder}
                            title={pathFolder ? folder : ""}
                            onClick={() => handleRemoveFolder(index)}
                         >
                            <FolderIcon />
-                           { pathFolder || folder }
+                           {pathFolder || folder}
                            <Less />
-                        
+
                         </li>
                      )
                   })
