@@ -28,7 +28,14 @@ const nextMusic = (howl, { musics, current }, next) => {
 
    const prevMusic = next ? (current + 1) : (current - 1);
 
-   if (prevMusic > listLength || prevMusic < 0) return;
+   if (prevMusic > listLength || prevMusic < 0) {
+      if (store.get("loop") === undefined) {
+
+         if (prevMusic > listLength) return 0;
+
+         if (prevMusic < 0) return listLength;
+      }
+   };
 
    return prevMusic;
 }
@@ -57,10 +64,20 @@ const playPauseMusic = (howl) => {
    }
 }
 
+const controllLoop = (howl, isLoop) => {
+   if (isLoop) {
+      howl.loop(isLoop === undefined ? false : isLoop);
+      store.set("loop", isLoop);
+   }
+
+   return store.get("loop");
+}
+
 export {
    createHowler,
    controlVolume,
    progressDuration,
    nextMusic,
-   playPauseMusic
+   playPauseMusic,
+   controllLoop
 }

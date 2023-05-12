@@ -8,7 +8,7 @@ const schema = {
       default: 0.05
    },
    "loop": {
-      type: "boolean",
+      type: ["boolean", "null"],
       default: false
    },
 
