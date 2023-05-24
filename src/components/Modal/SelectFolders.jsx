@@ -9,7 +9,7 @@ import Add from "../assets/add.svg";
 import Less from "../assets/less.svg";
 import FolderIcon from "../assets/folder-icon.svg";
 
-import modal from "./select-folders.module.css";
+// import modal from "./select-folders.module.css";
 
 export function SelectFolderButton() {
    const { openModal } = useContext(ModalContext);
@@ -28,6 +28,7 @@ export function SelectFolderButton() {
       >
          <div
             // className={modal["button-select-sources"]}
+            className="border-2 border-black-200 font-medium text-xl px-8 rounded-full py-2 cursor-pointer hover:bg-black-200 hover:border-black-400 transition-[border-color_200ms-ease]"
             onClick={handleModalSelectFolder}
          // className="text-white"
          >Selecione pastas de músicas</div>
@@ -66,9 +67,18 @@ export function SelectFolder() {
    }
 
    return (
-      <div className={modal["select-folders-container"]}>
-         <div className={modal["list-folders-content"]}>
-            <ul className={modal["list-folders"]}>
+      <div 
+         // className={modal["select-folders-container"]}
+      
+      >
+         <div 
+            // className={modal["list-folders-content"]}
+            className="pt-[1.4rem] pb-[1rem]"
+         >
+            <ul 
+               // className={modal["list-folders"]}
+               className="flex relative flex-col gap-3 py-2 h-72 overflow-y-auto"
+            >
                {
                   listFolders.map((folder, index) => {
                      let pathFolder = ""
@@ -79,12 +89,17 @@ export function SelectFolder() {
                      return (
                         <li
                            key={folder}
+                           className="flex group items-center relative p-[0.5rem_2rem_0.5rem_1rem] text-[0.96rem] text-white-500 break-all cursor-pointer transition-colors duration-200 ease-linear hover:text-white active:font-normal"
                            title={pathFolder ? folder : ""}
                            onClick={() => handleRemoveFolder(index)}
                         >
-                           <FolderIcon />
+                           <FolderIcon 
+                              className="first: mr-4 stroke-white-500 w-5 group-hover:stroke-white"
+                           />
                            {pathFolder || folder}
-                           <Less />
+                           <Less 
+                              className="hidden absolute stroke-red right-4 top-0 w-6 group-hover:block group-hover:border-[1px_solid_transparent]"
+                           />
 
                         </li>
                      )
@@ -93,14 +108,31 @@ export function SelectFolder() {
             </ul>
          </div>
 
-         <div className={modal["controllers-select-folders"]}>
-            <div id={modal["add-folders"]} onClick={handleAddFolders}>
+         <div 
+            // className={modal["controllers-select-folders"]}
+               className="flex absolute bottom-4 left-0 w-full"
+         >
+            <div 
+               // id={modal["add-folders"]} 
+               id="add-folders" 
+               className="flex items-center justify-center gap-3 py-2 text-center mx-8 border-[transparent] border-2 w-full font-medium rounded-[20px] cursor-pointer duration-300 transition-[background-color,opacity_0.3s_linear] hover:border-black-300 hover:bg-black-150 hover:shadow-[1px_1px_20px_black] active:bg-black-100"
+               onClick={handleAddFolders}
+            >
                Adicionar Pasta
-               <Add />
+               <Add 
+                  className="w-[1.4rem] h-[1.4rem]"
+               />
             </div>
-            <div id={modal["update-library"]} onClick={handleUpdateSource}>
+            <div 
+               // id={modal["update-library"]} 
+               id="update-library"
+               className="flex items-center justify-center gap-3 py-2 text-center mx-8 border-[transparent] border-2 w-full font-medium rounded-[20px] cursor-pointer duration-300 transition-[background-color,opacity_0.3s_linear] hover:border-black-300 hover:bg-black-150 hover:shadow-[1px_1px_20px_black] active:bg-black-100"
+               onClick={handleUpdateSource}
+            >
                Atualizar
-               <Atualizar />
+               <Atualizar 
+                  className="w-[1.1rem] h-[1.1rem]"
+               />
             </div>
          </div>
       </div>
