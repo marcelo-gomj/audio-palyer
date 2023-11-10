@@ -5,18 +5,24 @@ import * as R from "ramda";
 import Play from "../../assets/fill-play.svg";
 import Star from "../../assets/star.svg";
 import Dot from "../../assets/dot.svg";
+import { AlbumDatabase, AlbumsDatabase } from "../../../types/database";
 
-export function ListMusics({ items, reateMusic }) {
+type ListMusicsProps = {
+   items: AlbumsDatabase,
+   reateMusic: number
+}
+
+export function ListMusics({ items, reateMusic }: ListMusicsProps) {
    const { playMusic, currentMusic } = useContext(PlayerContext);
 
-   const formatDuration = (number) => {
+   const formatDuration = (number: number) => {
       return (number / 60).toFixed(2).replace(".", ":").padStart(2, "0");
    }
 
    return (
       <div>
          {
-            items.map((music, trackIndex) => {
+            items.map((music: AlbumDatabase, trackIndex: number) => {
                const playingMusic = currentMusic?.id === music.id;
 
                return (

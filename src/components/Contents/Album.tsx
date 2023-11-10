@@ -5,11 +5,18 @@ import Star from "../assets/star.svg";
 import Dot from "../assets/dot.svg";
 
 import * as R from "ramda";
+import { prisma } from "../../services/prisma";
 import { useEffect, useState } from "react";
+import { AlbumDatabase, AlbumsDatabase } from "../../types/database";
 
+interface ListAlbumProps {
+   list?: AlbumsDatabase,
+   id: string,
+   path?: string
+}
 
-export function ListAlbum({ list, id }) {
-   const [musics, updateMusics] = useState([]);
+export function ListAlbum({ list, id, path }: ListAlbumProps) {
+   const [musics, updateMusics] = useState<AlbumsDatabase>([]);
 
    useEffect(() => {
       prisma.albums.findMany({
@@ -17,7 +24,7 @@ export function ListAlbum({ list, id }) {
          orderBy: {
             track: "asc"
          }
-      }).then((album) => updateMusics(album))
+      }).then((album: AlbumsDatabase) => updateMusics(album))
 
    }, [])
 
@@ -27,19 +34,18 @@ export function ListAlbum({ list, id }) {
 
    const details = musics[0];
 
-   const formatDuration = (number) => {
+   const formatDuration = (number: number) => {
       return (number / 60).toFixed(2).replace(".", ":")
    }
 
-   const calcTimeTotalAlbum = (acc, music) => {
+   const calcTimeTotalAlbum = (acc: any, music: AlbumDatabase) => {
       acc = acc + music.duration
 
       return acc
    }
 
-   const reateMusic = (music, reate) => {
+   const reateMusic = (music: number, reate: number) => {
       musics[music].reated = reate + 1;
-      console.log("MUSIC", musics[music])
       updateMusics(musics)
    }
 

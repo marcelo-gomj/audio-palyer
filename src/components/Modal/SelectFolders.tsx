@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from 'react';
 import { ModalContext } from "../Contexts/ModalContext";
 const { ipcRenderer } = require("electron");
-import { config } from "../../services/localStorage";
+// import { config } from "../../services/localStorage";
 import { remove, length, slice, split, join, concat, uniq } from "ramda";
 
 import Atualizar from "../assets/atualizar.svg";
@@ -37,17 +37,17 @@ export function SelectFolderButton() {
 }
 
 export function SelectFolder() {
-   const [listFolders, setListFolders] = useState([]);
+   const [listFolders, setListFolders] = useState<string[]>([]);
 
    useEffect(() => {
-      const { paths } = config("sources");
+      // // const { paths } = config("sources");
 
-      if (paths) setListFolders(paths);
+      // if (paths) setListFolders(paths);
    }, []);
 
-   function submitListFolders(paths) {
+   function submitListFolders(paths: string[]) {
       setListFolders(paths);
-      config("sources", { paths });
+      // config("sources", { paths });
    }
 
    async function handleAddFolders() {
@@ -61,21 +61,21 @@ export function SelectFolder() {
 
    }
 
-   function handleRemoveFolder(index) {
+   function handleRemoveFolder(index: number) {
       const paths = remove(index, 1, listFolders)
       submitListFolders(paths);
    }
 
    return (
-      <div 
-         // className={modal["select-folders-container"]}
-      
+      <div
+      // className={modal["select-folders-container"]}
+
       >
-         <div 
+         <div
             // className={modal["list-folders-content"]}
             className="pt-[1.4rem] pb-[1rem]"
          >
-            <ul 
+            <ul
                // className={modal["list-folders"]}
                className="flex relative flex-col gap-3 py-2 h-72 overflow-y-auto"
             >
@@ -93,11 +93,11 @@ export function SelectFolder() {
                            title={pathFolder ? folder : ""}
                            onClick={() => handleRemoveFolder(index)}
                         >
-                           <FolderIcon 
+                           <FolderIcon
                               className="first: mr-4 stroke-white-500 w-5 group-hover:stroke-white"
                            />
                            {pathFolder || folder}
-                           <Less 
+                           <Less
                               className="hidden absolute stroke-red right-4 top-0 w-6 group-hover:block group-hover:border-[1px_solid_transparent]"
                            />
 
@@ -108,29 +108,29 @@ export function SelectFolder() {
             </ul>
          </div>
 
-         <div 
+         <div
             // className={modal["controllers-select-folders"]}
-               className="flex absolute bottom-4 left-0 w-full"
+            className="flex absolute bottom-4 left-0 w-full"
          >
-            <div 
+            <div
                // id={modal["add-folders"]} 
-               id="add-folders" 
+               id="add-folders"
                className="flex items-center justify-center gap-3 py-2 text-center mx-8 border-[transparent] border-2 w-full font-medium rounded-[20px] cursor-pointer duration-300 transition-[background-color,opacity_0.3s_linear] hover:border-black-300 hover:bg-black-150 hover:shadow-[1px_1px_20px_black] active:bg-black-100"
                onClick={handleAddFolders}
             >
                Adicionar Pasta
-               <Add 
+               <Add
                   className="w-[1.4rem] h-[1.4rem]"
                />
             </div>
-            <div 
+            <div
                // id={modal["update-library"]} 
                id="update-library"
                className="flex items-center justify-center gap-3 py-2 text-center mx-8 border-[transparent] border-2 w-full font-medium rounded-[20px] cursor-pointer duration-300 transition-[background-color,opacity_0.3s_linear] hover:border-black-300 hover:bg-black-150 hover:shadow-[1px_1px_20px_black] active:bg-black-100"
                onClick={handleUpdateSource}
             >
                Atualizar
-               <Atualizar 
+               <Atualizar
                   className="w-[1.1rem] h-[1.1rem]"
                />
             </div>

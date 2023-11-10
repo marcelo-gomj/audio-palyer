@@ -3,7 +3,7 @@ import { useContext, useEffect, useState } from "react";
 
 import { FixedSizeList } from "react-window";
 import { Image } from "../ImageMeta";
-import { RouteContext } from "../Contexts/RouteContext";
+import { RouteContext, typeRouteContext } from "../Contexts/RouteContext";
 
 import {
    split, splitEvery, nth, __
@@ -11,9 +11,16 @@ import {
 
 import SearchIcon from "../assets/search.svg";
 import styles from "./fix.module.css";
+import { AlbumsDatabase } from "../../types/database";
 
-export function ListAlbums({ list, path, where }) {
-   const [albumsList, setAlbumsList] = useState([]);
+type ListAlbumsProps = {
+   list?: AlbumsDatabase,
+   path?: string,
+   where?: { [key: string]: any }
+}
+
+export function ListAlbums({ list, path, where }: ListAlbumsProps) {
+   const [albumsList, setAlbumsList] = useState<AlbumsDatabase>([]);
 
    async function queryAlbumsGroup() {
       const queryAlbums = await prisma.albums.findMany({
@@ -35,14 +42,14 @@ export function ListAlbums({ list, path, where }) {
    }, [where]);
 
    if (!albumsList.length) {
-      return ""
+      return <></>
    }
 
 
    const albums = splitEvery(3, albumsList);
-   const { route, setRoute } = useContext(RouteContext);
+   const { route, setRoute } = useContext<typeRouteContext>(RouteContext);
 
-   const row = ({ style, index }) => {
+   const row = ({ style, index }: { style: any, index: number }) => {
       const musics = albums[index];
 
 
@@ -57,8 +64,8 @@ export function ListAlbums({ list, path, where }) {
                musics.map((music, index) => {
                   let albumName = music?.album || nth(-2, split("/", music.path));
 
-                  if (albumName.length > 40) {
-                     albumName = albumName.slice(0, 40) + "..."
+                  if (albumName && albumName.length > 40) {
+                     albumName = albumName?.slice(0, 40) + "..."
                   }
 
                   return (

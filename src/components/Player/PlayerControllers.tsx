@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Play from "../assets/play.svg";
 import Previous from "../assets/previous.svg";
 import Next from "../assets/next.svg";
@@ -38,7 +38,7 @@ export function PlayerControllers() {
       { icons: [Repeat, Normal], action: () => undefined },
    ];
 
-   function volumeBar(event) {
+   function volumeBar(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
       const { clientX, currentTarget: { offsetLeft, offsetWidth } } = event;
       const volume = Number(((clientX - offsetLeft) / offsetWidth));
 

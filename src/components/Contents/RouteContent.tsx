@@ -1,8 +1,14 @@
-import { ListAlbums } from "./Albums.jsx"
-import { ListAlbum } from "./Album/index.jsx";
-import { SearchItems } from "./SearchItems.jsx";
-import { SelectFolderButton } from "../Modal/SelectFolders.jsx";
-function getAlbums(path, id) {
+import { ListAlbums } from "./Albums"
+import { ListAlbum } from "./Album";
+import { SearchItems } from "./SearchItems";
+import { SelectFolderButton } from "../Modal/SelectFolders";
+
+type getContentProps = {
+	path: string,
+	id: string
+}
+
+function getAlbums(path: string, id: string) {
 	if (id) {
 		return <ListAlbum path={path} id={id} />
 	}
@@ -10,7 +16,7 @@ function getAlbums(path, id) {
 	return <ListAlbums path={path} />
 }
 
-export function getContent({ path, id }) {
+export function getContent({ path, id }: getContentProps) {
 
 	switch (path) {
 		case "":

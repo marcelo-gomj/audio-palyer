@@ -18,8 +18,8 @@ export function Layout() {
                   </main>
                   <PlayerFooter />
                </div>
-            </ModalProvider>
-         </RouteProvider>
-      </PlayerProvider>
+      //       </ModalProvider>
+         </RouteProvider >
+      </PlayerProvider >
    )
 }

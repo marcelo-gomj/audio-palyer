@@ -1,15 +1,23 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { RouteContext } from "../Contexts/RouteContext";
 import { prisma } from "../../services/prisma.js"
 
 import Arrow from "../assets/arrow.svg";
+import { AlbumDatabase, AlbumsDatabase } from "../../types/database";
 
-export function CategoryItem({ children, path, items, unique }) {
+type CategoryItemProps = {
+   children: React.ReactNode,
+   path: string,
+   items?: AlbumsDatabase,
+   unique?: boolean
+}
+
+export function CategoryItem({ children, path, items, unique }: CategoryItemProps) {
    const [subCategory, setSubCategory] = useState(false);
    const [subItems, setSubItems] = useState([]);
    const { setRoute, route } = useContext(RouteContext);
 
-   async function fetchSubList(path) {
+   async function fetchSubList(path: string) {
       const res = await prisma.albums.findMany({
          distinct: [path],
          select: {

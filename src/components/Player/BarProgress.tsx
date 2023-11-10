@@ -1,14 +1,16 @@
-import { useContext, useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { PlayerContext } from "../Contexts/PlayerContext";
 import { calcDuration } from "../../util/util";
 import { progressDuration } from "../../services/howler";
+
+type Event = React.MouseEvent<HTMLDivElement, MouseEvent>
 
 export function BarProgress() {
    const { handleHowl, currentMusic } = useContext(PlayerContext);
    const [duration, setDuration] = useState(0);
 
    useEffect(() => {
-      let timer;
+      let timer: any;
 
       if (handleHowl) {
          timer = setInterval(() => {
@@ -21,7 +23,7 @@ export function BarProgress() {
       }
    }, [handleHowl]);
 
-   function handleProgressBar({ clientX, currentTarget: { offsetLeft, offsetWidth } }) {
+   function handleProgressBar({ clientX, currentTarget: { offsetLeft, offsetWidth } }: Event) {
       if (currentMusic) {
          const progress = (currentMusic.duration / 100) * (((clientX - offsetLeft) / offsetWidth) * 100);
 
@@ -31,7 +33,7 @@ export function BarProgress() {
       }
    }
 
-   function handleTimeBar(duration) {
+   function handleTimeBar(duration: number) {
       if (currentMusic) {
          return ((duration / (currentMusic.duration)) * 100)
       }

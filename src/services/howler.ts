@@ -1,7 +1,13 @@
 import { Howl } from "howler";
 import { store } from "./electronStore";
+import { AlbumsDatabase } from "../types/database";
 
-const createHowler = (path) => {
+type nextContext = {
+   musics: AlbumsDatabase,
+   current: number | null,
+}
+
+const createHowler = (path: string) => {
    const howl = new Howl({
       src: path,
       html5: true,
@@ -10,15 +16,24 @@ const createHowler = (path) => {
 
    howl.play();
 
-   return (fn, ...params) => {
+   return (fn: ((arg0: Howl, ...params: any[]) => void), ...params: any[]) => {
       return fn(howl, ...params)
    };
+
+   // return (fn: any, ...params: Parameters<any>) => {
+   //    return fn(howl, ...params)
+   // };
 }
 
-const nextMusic = (howl, { musics, current }, next) => {
+const nextMusic = (
+   howl: Howl, { musics, current }: nextContext,
+   next?: boolean
+) => {
    howl.unload();
 
    const listLength = musics.length - 1;
+
+   if (current === null) return;
 
    if (store.get("shuffle")) {
       const randomMusic = Math.floor(Math.random() * listLength);
@@ -41,7 +56,7 @@ const nextMusic = (howl, { musics, current }, next) => {
 }
 
 
-const controlVolume = (howl, volume) => {
+const controlVolume = (howl: Howl, volume: number) => {
    if (volume) {
       howl.volume(volume);
       store.set("volume", volume);
@@ -50,13 +65,13 @@ const controlVolume = (howl, volume) => {
    return store.get("volume");
 }
 
-const progressDuration = (howl, pos) => {
+const progressDuration = (howl: Howl, pos: number) => {
    if (pos) howl.seek(pos);
 
    return howl.seek();
 }
 
-const playPauseMusic = (howl) => {
+const playPauseMusic = (howl: Howl) => {
    if (howl.playing()) {
       howl.pause()
    } else {
@@ -64,7 +79,7 @@ const playPauseMusic = (howl) => {
    }
 }
 
-const controllLoop = (howl, isLoop) => {
+const controllLoop = (howl: Howl, isLoop: undefined | boolean) => {
    if (isLoop) {
       howl.loop(isLoop === undefined ? false : isLoop);
       store.set("loop", isLoop);

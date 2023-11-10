@@ -8,11 +8,16 @@ import { ListMusics } from "./listMusics";
 
 import Play from "../../assets/fill-play.svg";
 import { playPauseMusic } from "../../../services/howler";
+import { AlbumDatabase, AlbumsDatabase } from "../../../types/database";
 
+type ListAlbumProps = {
+   path: string,
+   id: string
+}
 
-export function ListAlbum({ path, id }) {
+export function ListAlbum({ path, id }: ListAlbumProps) {
    const { playMusic } = useContext(PlayerContext);
-   const [musics, updateMusics] = useState([]);
+   const [musics, updateMusics] = useState<AlbumsDatabase>([]);
 
    useEffect(() => {
       prisma.albums.findMany({
@@ -20,7 +25,7 @@ export function ListAlbum({ path, id }) {
          orderBy: {
             track: "asc"
          }
-      }).then((musics) => updateMusics(musics))
+      }).then((musics: AlbumsDatabase) => updateMusics(musics))
 
    }, [id])
 
@@ -31,18 +36,18 @@ export function ListAlbum({ path, id }) {
    const details = musics[0];
 
 
-   const formatDuration = (number) => {
+   const formatDuration = (number: number) => {
       return (number / 60).toFixed(2).replace(".", ":");
    }
 
-   const calcTimeTotalAlbum = (acc, music) => {
+   const calcTimeTotalAlbum = (acc: number, music: AlbumDatabase) => {
 
       acc = acc + music.duration
 
       return acc
    }
 
-   const reateMusic = async (music, reate) => {
+   const reateMusic = async (music: number, reate: number) => {
       updateMusics((state) => {
          state[music].reated = reate + 1;
          return [...state]
@@ -113,7 +118,7 @@ export function ListAlbum({ path, id }) {
 
                <div>{musics.length} músicas</div>
 
-               <div>Avaliacão {R.mean(musics.map(music => music.reated)).toFixed(2) * 2}</div>
+               <div>Avaliacão {Number(R.mean(R.map(music => music.reated, musics)).toFixed(2)) * 2}</div>
             </footer>
          </header>
 
